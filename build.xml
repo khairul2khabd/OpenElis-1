@@ -47,26 +47,30 @@
     </target>
 
 
-    <target name="compile" depends="init, java.compile,jasper.compile, compass.compile"
-        description="compile the source ">
+    <!--<target name="compile" depends="init, java.compile,jasper.compile, compass.compile"-->
+    <!--description="compile the source ">-->
+    <!--</target>-->
+
+    <target name="compile" depends="init, java.compile, jasper.compile"
+            description="compile the source ">
     </target>
 
     <target name="java.compile"
             description="compile the source ">
         <mkdir dir="${target}"/>
-        <javac srcdir="${src}" destdir="${target}" encoding="iso-8859-1" classpathref="lib" source="1.7" target="1.7" debug="on"/>
+        <javac srcdir="${src}" destdir="${target}" encoding="iso-8859-1" classpathref="lib" source="1.8" target="1.8" debug="on"/>
         <copy todir="${target}">
             <fileset dir="${src}" includes="**/*.xml"/>
             <fileset dir="${src}" includes="**/*.properties"/>
         </copy>
     </target>
 
-    <taskdef name="jrc" classname="net.sf.jasperreports.ant.JRAntCompileTask"> 
+    <taskdef name="jrc" classname="net.sf.jasperreports.ant.JRAntCompileTask">
         <classpath refid="build.lib"/>
     </taskdef>
 
     <target name="jasper.compile" depends="java.compile">
-        <jrc 
+        <jrc
                 srcdir="${web}/WEB-INF/reports"
                 destdir="${web}/WEB-INF/reports"
                 tempdir="${web}/WEB-INF/reports"
@@ -92,7 +96,7 @@
         <war destfile="${dist}/openelis.war">
             <classes dir="${target}"/>
             <fileset dir="${web}"/>
-            <fileset file="${dist}/LICENSE"/>            
+            <fileset file="${dist}/LICENSE"/>
             <lib dir="${dist}/lib"/>
         </war>
     </target>
@@ -101,9 +105,9 @@
         <zip destfile="OpenElis.zip" basedir="../" includes="OpenElis**/**" excludes="**/.idea/**,*.iml,*.git*,**/dist/*,**/target/*,*.svn*,**/out/**,**/openelis/**,**/src/**,**/logs/**,**/junit/*,**/OpenElis.zip" />
     </target>
 
-    <target name="build" depends="clean, compile, resetDB, test, report, dist"/>
-    <target name="devbuild" depends="clean, compile, updateDB, test, report, dist"/>
-    <target name="useHaitiDB" depends="dropDB, initHaitiDB, updateHaitiDB, updateDB" />
+    <target name="build" depends="clean, compile, test, report, dist"/>
+    <target name="devbuild" depends="clean, compile, test, report, dist"/>
+    <target name="useHaitiDB" depends="initHaitiDB, updateHaitiDB" />
 
     <target name="initHaitiDB">
         <chmod file="scripts/initDB.sh" perm="a+x"/>
@@ -143,32 +147,32 @@
         </delete>
     </target>
 
-    <target name="setupDB" depends="initDB, updateDB"/>
+    <!--<target name="setupDB" depends="initDB, updateDB"/>-->
 
-    <target name="initDB">
-        <chmod file="scripts/initDB.sh" perm="a+x"/>
-        <exec executable="scripts/initDB.sh">
-            <arg value="bahmni-base.dump"/>
-        </exec>
-    </target>
+    <!--<target name="initDB">-->
+        <!--<chmod file="scripts/initDB.sh" perm="a+x"/>-->
+        <!--<exec executable="scripts/initDB.sh">-->
+            <!--<arg value="bahmni-base.dump"/>-->
+        <!--</exec>-->
+    <!--</target>-->
 
-    <target name="dropDB">
-        <echo message="DROPPING OpenELIS database ......"/>
-        <sleep seconds="4" description="Waiting for few seconds in case the person does not want to delete the DB."/>
-        <chmod file="scripts/dropDB.sh" perm="a+x"/>
-        <exec executable="scripts/dropDB.sh"/>
-    </target>
+    <!--<target name="dropDB">-->
+        <!--<echo message="DROPPING OpenELIS database ......"/>-->
+        <!--<sleep seconds="4" description="Waiting for few seconds in case the person does not want to delete the DB."/>-->
+        <!--<chmod file="scripts/dropDB.sh" perm="a+x"/>-->
+        <!--<exec executable="scripts/dropDB.sh"/>-->
+    <!--</target>-->
 
-    <target name="resetDB" depends="dropDB, initDB, updateDB"/>
+    <!--<target name="resetDB" depends="dropDB, initDB, updateDB"/>-->
 
-    <target name="updateDB">
-        <echo message="Running migration for contexts : Bahmni"/>
-        <exec executable="java" failonerror="true" dir="${liquibase}">
-            <arg line="-jar -Dfile.encoding=utf-8 lib/liquibase-1.9.5.jar --defaultsFile=liquibase.properties --contexts=bahmni --url=jdbc:postgresql://localhost:5432/clinlims  --logLevel=warning update"/>
-        </exec>
-    </target>
+    <!--<target name="updateDB">-->
+        <!--<echo message="Running migration for contexts : Bahmni"/>-->
+        <!--<exec executable="java" failonerror="true" dir="${liquibase}">-->
+            <!--<arg line="-jar -Dfile.encoding=utf-8 lib/liquibase-1.9.5.jar &#45;&#45;defaultsFile=liquibase.properties &#45;&#45;contexts=bahmni &#45;&#45;url=jdbc:postgresql://localhost:5432/clinlims  &#45;&#45;logLevel=warning update"/>-->
+        <!--</exec>-->
+    <!--</target>-->
 
-    <target name="test" depends="clean, compile, updateDB" />
+    <target name="test" depends="clean, compile" />
 
     <target name="test-only">
         <mkdir dir="${junit.output.dir}"/>
