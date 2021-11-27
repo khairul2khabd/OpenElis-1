@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="us.mn.state.health.lims.customreport.valueholder.OdooReport" table="odoo_order" >
+        <id name="id" type="java.lang.Integer">
+            <column name="ID" precision="10" scale="0" />
+            <generator class="sequence">
+               <param name="sequence">odoo_order_seq</param>
+            </generator>
+        </id>
+ 
+        <property name="productId" type="java.lang.Integer">
+            <column name="product_id" precision="10" scale="0" not-null="true" />
+        </property>
+        <property name="productName" type="java.lang.String">
+            <column name="product_name" precision="22" scale="0" not-null="true" />
+        </property>
+        <property name="invoiceId" type="java.lang.Integer">
+            <column name="invoice_id" precision="22" scale="0" not-null="true" />
+        </property>
+        <property name="invoiceNumber" type="java.lang.String">
+            <column name="invoice_number" precision="22" scale="0" not-null="true" />
+        </property>
+        <property name="date" type="java.sql.Timestamp">
+            <column name="date" length="7" not-null="true" />
+        </property>
+        <property name="status" type="java.lang.Integer">
+            <column name="status" length="1" not-null="true" />
+        </property>
+        <property name="patientId" type="java.lang.String">
+            <column name="patient_id" length="1" not-null="true" />
+        </property>
+        <property name="patientUUID" type="java.lang.String">
+            <column name="patient_uuid" length="1" not-null="true" />
+        </property>
+        <property name="patientIdentifier" type="java.lang.String">
+            <column name="patient_identifier" length="1" not-null="true" />
+        </property>
+        <property name="sampleId" type="java.lang.String">
+            <column name="sample_id" length="1" not-null="false" />
+        </property>
+
+    </class>
+</hibernate-mapping>

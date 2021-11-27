@@ -827,4 +827,35 @@ public class SampleDAOImpl extends BaseDAOImpl implements SampleDAO {
 			throw new LIMSRuntimeException("Error in Sample getSampleByID(String id)", he);
 		}
 	}
+
+	@Override
+	public List<Sample> getSamplesCollectOnAndStatus(String recievedDate, int status) throws LIMSRuntimeException {
+		List<Sample> list = null;
+
+		Calendar start = getCalendarForDateString(recievedDate);
+		if (GenericValidator.isBlankOrNull(recievedDate)) {
+			recievedDate = recievedDate;
+		}
+		Calendar end = getCalendarForDateString(recievedDate);
+		// worried about time stamps including time information, so might be missed comparing to midnight (00:00:00.00) on the last day of range.
+		end.add(Calendar.DAY_OF_YEAR, 1);
+		end.set(Calendar.HOUR_OF_DAY, 0);
+		end.set(Calendar.MINUTE, 0);
+		end.set(Calendar.SECOND, 0);
+		try {
+			String sql = "from Sample as s where s.receivedTimestamp >= :start AND s.receivedTimestamp < :end AND s.statusId>= :status";
+			Query query = HibernateUtil.getSession().createQuery(sql);
+			query.setCalendarDate("start", start);
+			query.setCalendarDate("end", end);
+			query.setParameter("status", status);
+			list = query.list();
+
+			HibernateUtil.getSession().flush();
+			HibernateUtil.getSession().clear();
+		} catch (HibernateException he) {
+			LogEvent.logError("SampleDAOImpl", "getSamplesReceivedInDateRange()", he.toString());
+			throw new LIMSRuntimeException("Error in Sample getSamplesReceivedInDateRange()", he);
+		}
+		return list;
+	}
 }

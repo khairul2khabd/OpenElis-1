@@ -315,4 +315,17 @@
     <definition name="uploadForm" extends="baseMenuDefinition">
         <put name="body" value="/pages/upload/upload.jsp" />
     </definition>
+
+    <definition name="pathologyReportDefinition" extends="baseMenuDefinition">
+        <put name="body" value="/pages/customreport/pathology.jsp"/>
+    </definition>
+
+    <definition name="schedulerReportDefinition" extends="baseMenuDefinition">
+        <put name="body" value="/pages/customreport/schedulerReport.jsp"/>
+    </definition>
+
+    <definition name="customReportDefinition" extends="baseMenuDefinition">
+        <put name="body" value="/pages/customreport/main.jsp"/>
+    </definition>
+
 </tiles-definitions>

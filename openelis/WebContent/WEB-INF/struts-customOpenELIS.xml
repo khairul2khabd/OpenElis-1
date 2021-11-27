@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+        "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+
+<struts-config>
+
+    <form-beans>
+
+        <form-bean name="PathologyReportForm" type="us.mn.state.health.lims.common.action.BaseActionForm">
+            <form-property name="paging" type="us.mn.state.health.lims.common.paging.PagingBean"/>
+            <form-property name="lastupdated" type="java.sql.Timestamp" initial=""/>
+        </form-bean>
+
+
+        <form-bean name="SchedulerReportForm" type="us.mn.state.health.lims.common.action.BaseActionForm">
+            <form-property name="paging" type="us.mn.state.health.lims.common.paging.PagingBean"/>
+            <form-property name="lastupdated" type="java.sql.Timestamp" initial=""/>
+        </form-bean>
+
+
+        <form-bean name="CustomReportForm" type="us.mn.state.health.lims.common.action.BaseActionForm">
+            <form-property name="paging" type="us.mn.state.health.lims.common.paging.PagingBean"/>
+            <form-property name="lastupdated" type="java.sql.Timestamp" initial=""/>
+            <form-property name="orderList" type="java.util.ArrayList"/>
+            <form-property name="sample" type="us.mn.state.health.lims.sample.valueholder.Sample"/>
+            <form-property name="patient" type="us.mn.state.health.lims.patient.valueholder.Patient"/>
+            <!--<form-property name="testResult" type="java.util.ArrayList"/>-->
+            <!--<form-property name="inventoryItems" type="java.util.List"/>-->
+        </form-bean>
+
+        <form-bean name="AjaxReceiveForm" type="us.mn.state.health.lims.common.action.BaseActionForm">
+            <form-property name="paging" type="us.mn.state.health.lims.common.paging.PagingBean"/>
+            <form-property name="lastupdated" type="java.sql.Timestamp" initial=""/>
+            <form-property name="sampleList" type="java.util.ArrayList"/>
+            <form-property name="labTests" type="java.util.ArrayList"/>
+            <!--<form-property name="sample" type="us.mn.state.health.lims.sample.valueholder.Sample"/>-->
+            <!--<form-property name="patient" type="us.mn.state.health.lims.patient.valueholder.Patient"/>-->
+            <!--<form-property name="testResult" type="java.util.ArrayList"/>-->
+            <!--<form-property name="inventoryItems" type="java.util.List"/>-->
+        </form-bean>
+
+
+        <form-bean name="AjaxSchedulerForm" type="us.mn.state.health.lims.common.action.BaseActionForm">
+            <form-property name="paging" type="us.mn.state.health.lims.common.paging.PagingBean"/>
+
+            <form-property name="productName" type="java.lang.String"/>
+            <form-property name="patientId" type="java.lang.String"/>
+            <!--<form-property name="sample" type="us.mn.state.health.lims.sample.valueholder.Sample"/>-->
+            <!--<form-property name="patient" type="us.mn.state.health.lims.patient.valueholder.Patient"/>-->
+            <!--<form-property name="testResult" type="java.util.ArrayList"/>-->
+            <!--<form-property name="inventoryItems" type="java.util.List"/>-->
+        </form-bean>
+
+    </form-beans>
+
+    <action-mappings>
+
+        <action path="/PathologyReport" name="PathologyReportForm"
+                type="us.mn.state.health.lims.customreport.action.PathologyReportAction"
+                validate="false">
+            <forward name="success" path="pathologyReportDefinition"/>
+            <forward name="fail" path="homePageDefinition"/>
+        </action>
+
+        <action path="/SchedulerReport" name="SchedulerReportForm"
+                type="us.mn.state.health.lims.customreport.action.SchedulerAction"
+                validate="false">
+            <forward name="success" path="schedulerReportDefinition"/>
+            <forward name="fail" path="homePageDefinition"/>
+        </action>
+
+        <!--Custom Print -->
+        <action path="/CustomReport" name="CustomReportForm"
+                type="us.mn.state.health.lims.customreport.action.CustomReportAction"
+                validate="false"
+        >
+            <forward name="success" path="customReportDefinition"/>
+            <forward name="fail" path="homePageDefinition"/>
+        </action>
+
+
+        <action path="/CustomReportUpdate" name="CustomReportForm"
+                type="us.mn.state.health.lims.customreport.action.CustomReportAction"
+                validate="false"
+        >
+            <forward name="success" path="/CustomReport.do"/>
+            <forward name="forwardDashboard" path="/LabDashboard.do" redirect="true"/>
+            <forward name="error" path="patientResultDefinition"/>
+            <forward name="fail" path="homePageDefinition"/>
+        </action>
+
+        <action path="/CancelCustomReport" type="us.mn.state.health.lims.common.action.CommonCancelAction">
+            <forward name="success" path="/LabDashboard.do"/>
+        </action>
+
+        <!--Custom Print end -->
+
+        <action path="/AjaxReport" name="AjaxReceiveForm"
+                type="us.mn.state.health.lims.customreport.action.AjaxCustomReportAction">
+            <forward name="success" path="/pages/customreport/ajax.jsp"/>
+        </action>
+
+        <!--Custom Scheduler Report Action-->
+
+        <action path="/SchedulerReportOdoo" name="AjaxSchedulerForm"
+                type="us.mn.state.health.lims.customreport.action.AjaxSchedulerReportAction">
+            <forward name="success" path="/pages/customreport/schedulerReportViewAjax.jsp"/>
+        </action>
+
+        <action path="/AjaxReportView" name="AjaxReceiveForm"
+                type="us.mn.state.health.lims.customreport.action.AjaxCustomReportViewAction">
+            <forward name="success" path="/pages/customreport/ajaxReportView.jsp"/>
+            <forward name="notsingle" path="/pages/customreport/singlePageView.jsp"/>
+        </action>
+
+        <!--<action path="/JsonTest" name="loginForm" type="us.mn.state.health.lims.customreport.restAction.TestingJson"-->
+                <!--validate="false">-->
+            <!--<forward name="success" path="/pages/customreport/jsonn.jsp"/>-->
+        <!--</action>-->
+
+    </action-mappings>
+</struts-config>

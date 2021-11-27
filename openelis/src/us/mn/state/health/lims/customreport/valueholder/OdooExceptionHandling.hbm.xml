@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="us.mn.state.health.lims.customreport.valueholder.OdooExceptionHandling" table="odoo_exception_handling">
+        <id name="id" type="java.lang.Integer">
+            <column name="ID" precision="10" scale="0"/>
+            <generator class="sequence">
+                <param name="sequence">odoo_order_exception_seq</param>
+            </generator>
+        </id>
+
+        <property name="type" type="java.lang.String">
+            <column name="exception_type" precision="10" scale="0" not-null="false"/>
+        </property>
+        <property name="productName" type="java.lang.String">
+            <column name="product_name" precision="22" scale="0" not-null="false"/>
+        </property>
+        <property name="description" type="java.lang.Integer">
+            <column name="exception_description" precision="22" scale="0" not-null="false"/>
+        </property>
+        <property name="craetedDate" type="java.sql.Timestamp">
+            <column name="created_date" precision="22" scale="0" not-null="false"/>
+        </property>
+        <property name="invoiceNumber" type="java.lang.String">
+            <column name="created_date" precision="22" scale="0" not-null="false"/>
+        </property>
+        <property name="patientUUID" type="java.lang.String">
+            <column name="patient_uuid" precision="22" scale="0" not-null="false"/>
+        </property>
+
+    </class>
+</hibernate-mapping>
+
+
+<!--
+for commit-->

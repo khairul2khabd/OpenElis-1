@@ -87,4 +87,6 @@ public interface SampleDAO extends BaseDAO {
 
 	public Sample getSampleByID(String id) throws LIMSRuntimeException;
 
+	public List<Sample> getSamplesCollectOnAndStatus(String recievedDate, int status) throws LIMSRuntimeException;
+
 }
